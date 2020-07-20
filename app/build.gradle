@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -28,12 +29,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.appcompat:appcompat:$androidx_api_version"
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.recyclerview:recyclerview:$androidx_api_version"
 
     // retrofit + gson
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -49,17 +51,21 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger2_version"
     implementation "com.google.dagger:dagger-android:$dagger2_version"
     implementation "com.google.dagger:dagger-android-support:$dagger2_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.dagger2_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2_version"
 
     // Room
-    implementation "android.arch.persistence.room:runtime:$rootProject.archVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archVersion"
-    implementation "android.arch.persistence.room:rxjava2:$rootProject.archVersion"
+    implementation "android.arch.persistence.room:runtime:$androidx_api_version"
+    kapt "android.arch.persistence.room:compiler:$androidx_api_version"
+    implementation "android.arch.persistence.room:rxjava2:$androidx_api_version"
 
     // Lifecycle arch
-    implementation "android.arch.lifecycle:runtime:$rootProject.archVersion"
-    implementation "android.arch.lifecycle:extensions:$rootProject.archVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archVersion"
+    implementation "android.arch.lifecycle:runtime:$androidx_api_version"
+    implementation "android.arch.lifecycle:extensions:$androidx_api_version"
+    kapt "android.arch.lifecycle:compiler:$androidx_api_version"
 
+}
+
+kapt {
+    generateStubs = true
 }
