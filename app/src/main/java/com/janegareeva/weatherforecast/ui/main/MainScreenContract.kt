@@ -14,5 +14,6 @@ class MainScreenContract {
 
     interface Presenter {
         fun loadCitiesInfo()
+        fun loadCityInfo(name: String)
     }
 }

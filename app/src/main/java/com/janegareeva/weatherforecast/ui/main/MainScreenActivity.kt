@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.janegareeva.weatherforecast.R
+import com.janegareeva.weatherforecast.app.App
 import com.janegareeva.weatherforecast.db.model.CityInfo
 import com.janegareeva.weatherforecast.di.component.DaggerMainScreenComponent
 import com.janegareeva.weatherforecast.di.module.MainScreenModule
@@ -25,10 +26,12 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
         setContentView(R.layout.activity_main)
         DaggerMainScreenComponent.builder()
             .mainScreenModule(MainScreenModule(this))
+            .appComponent((application as App).appComponent)
             .build()
             .inject(this)
 
         presenter.loadCitiesInfo()
+        presenter.loadCityInfo("Moscow")
         adapter = MainScreenCitiesAdapter()
         citiesInfo.adapter = adapter
         citiesInfo.layoutManager = LinearLayoutManager(this)

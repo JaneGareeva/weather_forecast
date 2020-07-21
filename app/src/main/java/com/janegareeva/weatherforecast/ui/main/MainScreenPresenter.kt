@@ -34,6 +34,15 @@ class MainScreenPresenter @Inject constructor(
         disposables.add(disposable)
     }
 
+    override fun loadCityInfo(name: String) {
+        val disposable = repository.loadCityByNameInfo(name)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::getCities, this::handleError)
+
+        disposables.add(disposable)
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onAttach() {
         loadCitiesInfo()

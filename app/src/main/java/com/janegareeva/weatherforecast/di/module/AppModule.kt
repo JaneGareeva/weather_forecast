@@ -1,26 +1,28 @@
-package com.janegareeva.weatherforecast.app
+package com.janegareeva.weatherforecast.di.module
 
 import android.app.Application
 import android.content.Context
+import com.janegareeva.weatherforecast.api.ApiService
 import com.janegareeva.weatherforecast.db.repository.CityInfoRepository
+import com.janegareeva.weatherforecast.ui.base.AppScope
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module (includes = [ApiServiceModule::class, DatabaseModule::class])
 class AppModule(context: Application) {
     private val context: Context
 
     @Provides
-    @Singleton
+    @AppScope
     fun provideContext(): Context {
         return context
     }
 
     @Provides
-    @Singleton
-    fun provideCityInfoRepository(): CityInfoRepository {
-        return CityInfoRepository()
+    @AppScope
+    fun provideCityInfoRepository(apiService: ApiService): CityInfoRepository {
+        return CityInfoRepository(apiService)
     }
 
     init {

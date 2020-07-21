@@ -6,13 +6,9 @@ import com.janegareeva.weatherforecast.db.Config
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = Config.CITY_INFO_TABLE)
-class CityInfo(@SerializedName("name")
-               @PrimaryKey
-               val name: String = "") {
-
-    @SerializedName("currentWeather")
-    var currentWeather: String = ""
-
-    @SerializedName("forecast")
-    var forecast: List<String> = listOf()
-}
+data class CityInfo(
+    @SerializedName("id") @PrimaryKey val id: String,
+    @SerializedName("name") val name: String = "",
+    @SerializedName("temp") val temp: Double = 0.0,
+    @SerializedName("pressure") val pressure: Int = 0,
+    @SerializedName("wind") var wind: Double = 0.0)

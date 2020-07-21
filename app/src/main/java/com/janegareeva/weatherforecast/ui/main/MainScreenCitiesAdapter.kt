@@ -34,7 +34,7 @@ class MainScreenCitiesAdapter():
 
         fun bind(item: CityInfo) {
             itemView.name.text = item.name
-            itemView.details.text = item.currentWeather
+            itemView.details.text = item.temp.toString()
         }
     }
 }
