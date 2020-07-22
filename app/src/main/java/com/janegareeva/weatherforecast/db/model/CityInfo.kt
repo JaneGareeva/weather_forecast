@@ -11,4 +11,5 @@ data class CityInfo(
     @SerializedName("name") val name: String = "",
     @SerializedName("temp") val temp: Double = 0.0,
     @SerializedName("pressure") val pressure: Int = 0,
-    @SerializedName("wind") var wind: Double = 0.0)
+    @SerializedName("wind") var wind: Double = 0.0,
+    @SerializedName("description") val description: String = "")

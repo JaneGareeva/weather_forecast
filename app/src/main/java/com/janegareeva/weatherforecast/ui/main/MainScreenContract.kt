@@ -1,15 +1,14 @@
 package com.janegareeva.weatherforecast.ui.main
 
 import com.janegareeva.weatherforecast.db.model.CityInfo
+import com.janegareeva.weatherforecast.ui.base.BaseView
 import java.lang.Exception
 
 
 class MainScreenContract {
 
-    interface MainView {
+    interface MainView: BaseView {
         fun showCitiesInfo(cities: List<CityInfo>)
-        fun showProgress(show: Boolean)
-        fun showErrorMessage(message: String)
     }
 
     interface Presenter {

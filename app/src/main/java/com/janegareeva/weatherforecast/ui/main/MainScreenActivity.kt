@@ -1,20 +1,22 @@
 package com.janegareeva.weatherforecast.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleRegistry
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.janegareeva.weatherforecast.R
 import com.janegareeva.weatherforecast.app.App
 import com.janegareeva.weatherforecast.db.model.CityInfo
 import com.janegareeva.weatherforecast.di.component.DaggerMainScreenComponent
 import com.janegareeva.weatherforecast.di.module.MainScreenModule
+import com.janegareeva.weatherforecast.ui.detail.DetailActivity
+import com.janegareeva.weatherforecast.ui.detail.DetailActivity.Companion.ARG_CITY_ID
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 import javax.inject.Inject
+
 
 class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
 
@@ -32,18 +34,22 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
             .build()
             .inject(this)
 
-        //presenter.loadCitiesInfo()
-        adapter = MainScreenCitiesAdapter()
+        adapter = MainScreenCitiesAdapter {
+            val intent = Intent(this, DetailActivity::class.java).apply {
+                this.putExtra(ARG_CITY_ID, it.id)
+            }
+            startActivity(intent)
+        }
         citiesInfo.adapter = adapter
         citiesInfo.layoutManager = LinearLayoutManager(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
+        citiesInfo.addItemDecoration(
+            DividerItemDecoration(
+                this, LinearLayoutManager.VERTICAL
+            )
+        )
     }
 
     override fun showCitiesInfo(cities: List<CityInfo>) {
-        showProgress(false)
         adapter.setData(cities)
     }
 
@@ -56,7 +62,6 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
     }
 
     override fun showErrorMessage(message: String) {
-        showProgress(false)
-       Toast.makeText(this, message, LENGTH_LONG).show()
+        Toast.makeText(this, message, LENGTH_LONG).show()
     }
 }

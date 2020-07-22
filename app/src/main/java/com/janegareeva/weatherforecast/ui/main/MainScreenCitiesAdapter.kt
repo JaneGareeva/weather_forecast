@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import com.janegareeva.weatherforecast.R
 import com.janegareeva.weatherforecast.db.model.CityInfo
 import kotlinx.android.synthetic.main.city_item.view.*
+import kotlin.math.roundToInt
 
-class MainScreenCitiesAdapter():
-    androidx.recyclerview.widget.RecyclerView.Adapter<MainScreenCitiesAdapter.CityViewHolder>() {
+class MainScreenCitiesAdapter(val itemClick: (CityInfo) -> Unit): androidx.recyclerview.widget.RecyclerView.Adapter<MainScreenCitiesAdapter.CityViewHolder>() {
 
     private var data: List<CityInfo> = listOf()
 
@@ -21,6 +21,9 @@ class MainScreenCitiesAdapter():
 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
         holder.bind(data[position])
+        holder.itemView.root.setOnClickListener {
+            itemClick.invoke(data[position])
+        }
     }
 
     override fun getItemCount(): Int = data.size
@@ -34,7 +37,7 @@ class MainScreenCitiesAdapter():
 
         fun bind(item: CityInfo) {
             itemView.name.text = item.name
-            itemView.details.text = item.temp.toString()
+            itemView.details.text = "current temperature: ${item.temp.roundToInt()} C, pressure: ${item.pressure}"
         }
     }
 }

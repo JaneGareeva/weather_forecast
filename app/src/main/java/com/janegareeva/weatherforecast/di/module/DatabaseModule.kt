@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.janegareeva.weatherforecast.db.Config
 import com.janegareeva.weatherforecast.db.WeatherForecastDb
+import com.janegareeva.weatherforecast.db.dao.CityForecastDao
 import com.janegareeva.weatherforecast.db.dao.CityInfoDao
 import com.janegareeva.weatherforecast.ui.base.AppScope
 import dagger.Module
@@ -29,8 +30,14 @@ class DatabaseModule {
 
     @Provides
     @AppScope
-    fun provideDao(stackOverflowDb: WeatherForecastDb): CityInfoDao {
-        return stackOverflowDb.cityInfoDao()
+    fun provideDao(db: WeatherForecastDb): CityInfoDao {
+        return db.cityInfoDao()
+    }
+
+    @Provides
+    @AppScope
+    fun provideForecastDao(db: WeatherForecastDb): CityForecastDao {
+        return db.cityForecastDao()
     }
 
     companion object {

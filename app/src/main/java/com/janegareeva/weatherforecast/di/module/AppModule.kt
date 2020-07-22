@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.janegareeva.weatherforecast.api.ApiService
 import com.janegareeva.weatherforecast.api.connectivity.ConnectivityProvider
+import com.janegareeva.weatherforecast.db.dao.CityForecastDao
 import com.janegareeva.weatherforecast.db.dao.CityInfoDao
 import com.janegareeva.weatherforecast.db.repository.CityInfoRepository
 import com.janegareeva.weatherforecast.ui.base.AppScope
@@ -28,8 +29,8 @@ class AppModule(context: Application) {
 
     @Provides
     @AppScope
-    fun provideCityInfoRepository(apiService: ApiService, cityInfoDao: CityInfoDao): CityInfoRepository {
-        return CityInfoRepository(apiService, cityInfoDao)
+    fun provideCityInfoRepository(apiService: ApiService, cityInfoDao: CityInfoDao, cityForecastDao: CityForecastDao): CityInfoRepository {
+        return CityInfoRepository(apiService, cityInfoDao, cityForecastDao)
     }
 
     init {
