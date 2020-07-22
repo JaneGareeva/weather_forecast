@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.janegareeva.weatherforecast.R
 import com.janegareeva.weatherforecast.app.App
@@ -30,8 +32,7 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
             .build()
             .inject(this)
 
-        presenter.loadCitiesInfo()
-        presenter.loadCityInfo("Moscow")
+        //presenter.loadCitiesInfo()
         adapter = MainScreenCitiesAdapter()
         citiesInfo.adapter = adapter
         citiesInfo.layoutManager = LinearLayoutManager(this)
@@ -58,5 +59,4 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
         showProgress(false)
        Toast.makeText(this, message, LENGTH_LONG).show()
     }
-
 }

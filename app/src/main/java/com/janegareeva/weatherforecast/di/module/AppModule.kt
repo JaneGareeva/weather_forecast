@@ -3,11 +3,12 @@ package com.janegareeva.weatherforecast.di.module
 import android.app.Application
 import android.content.Context
 import com.janegareeva.weatherforecast.api.ApiService
+import com.janegareeva.weatherforecast.api.connectivity.ConnectivityProvider
+import com.janegareeva.weatherforecast.db.dao.CityInfoDao
 import com.janegareeva.weatherforecast.db.repository.CityInfoRepository
 import com.janegareeva.weatherforecast.ui.base.AppScope
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module (includes = [ApiServiceModule::class, DatabaseModule::class])
 class AppModule(context: Application) {
@@ -21,8 +22,14 @@ class AppModule(context: Application) {
 
     @Provides
     @AppScope
-    fun provideCityInfoRepository(apiService: ApiService): CityInfoRepository {
-        return CityInfoRepository(apiService)
+    fun provideConnectivityProvider(): ConnectivityProvider{
+        return ConnectivityProvider.createProvider(context)
+    }
+
+    @Provides
+    @AppScope
+    fun provideCityInfoRepository(apiService: ApiService, cityInfoDao: CityInfoDao): CityInfoRepository {
+        return CityInfoRepository(apiService, cityInfoDao)
     }
 
     init {

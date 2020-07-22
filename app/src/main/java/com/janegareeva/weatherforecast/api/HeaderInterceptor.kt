@@ -12,7 +12,8 @@ class HeaderInterceptor : Interceptor {
             ACCEPT_HEADER,
             JSON_TYPE
         ).build()
-        return chain.proceed(request)
+        val response = chain.proceed(request)
+        return response
     }
 
     companion object {

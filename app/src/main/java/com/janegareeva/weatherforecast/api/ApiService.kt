@@ -1,6 +1,7 @@
 package com.janegareeva.weatherforecast.api
 
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,12 +13,12 @@ interface ApiService {
         @Query("q") name: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): Observable<CityInfoResponse>
+    ): Single<CityInfoResponse>
 
-    @GET("group?id={idList}")
+    @GET("group")
     fun loadCitiesInfoByIdList(
-        @Path("idList") idList: String,
+        @Query("id") idList: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): Observable<List<CityInfoResponse>>
+    ): Single<CityInfoListResponse>
 }
