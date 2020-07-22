@@ -13,7 +13,7 @@ class MainScreenPresenter @Inject constructor(
     view: MainScreenContract.MainView,
     val repository: CityInfoRepository,
     connectivityProvider: ConnectivityProvider
-): BasePresenter(view, connectivityProvider), MainScreenContract.Presenter {
+) : BasePresenter(view, connectivityProvider), MainScreenContract.Presenter {
 
     override fun loadCitiesInfo() {
         view.showProgress(true)
@@ -25,18 +25,23 @@ class MainScreenPresenter @Inject constructor(
     }
 
     override fun loadCityInfo(name: String) {
-        val disposable = repository.findAndAddCityByName(name)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::handleCitiesResult, this::handleError)
+        if (hasInternet()) {
+            view.showProgress(true)
+            val disposable = repository.findAndAddCityByName(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleCitiesResult, this::handleError)
 
-        disposables.add(disposable)
+            disposables.add(disposable)
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun onAttach() {
         super.onAttach()
-       // loadCitiesInfo()
+        if (!hasInternet()) {
+            loadCitiesInfo()
+        }
     }
 
     override fun onStateChange(state: ConnectivityProvider.NetworkState) {

@@ -35,7 +35,7 @@ abstract class BasePresenter (
     }
 
     protected fun hasInternet(): Boolean {
-        return (connectivityProvider.getNetworkState() as
-                ConnectivityProvider.NetworkState.ConnectedState).hasInternet
+        return (connectivityProvider.getNetworkState() as?
+                ConnectivityProvider.NetworkState.ConnectedState)?.hasInternet ?: false
     }
 }

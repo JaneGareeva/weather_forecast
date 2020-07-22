@@ -43,7 +43,9 @@ class DetailsPresenter @Inject constructor(
 
     override fun onAttach() {
         super.onAttach()
-       // loadInfo()
+        if (!hasInternet()) {
+            loadInfo()
+        }
     }
 
     private fun loadInfo() {

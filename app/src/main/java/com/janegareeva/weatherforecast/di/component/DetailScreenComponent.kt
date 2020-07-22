@@ -8,6 +8,5 @@ import dagger.Component
 @ActivityScope
 @Component(modules = [DetailScreenModule::class], dependencies = [AppComponent::class])
 interface DetailScreenComponent {
-
     fun inject(activity: DetailActivity)
 }

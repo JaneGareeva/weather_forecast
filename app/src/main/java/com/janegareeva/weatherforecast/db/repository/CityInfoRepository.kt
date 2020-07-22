@@ -41,7 +41,7 @@ class CityInfoRepository @Inject constructor(
                     transform(it)
                 }
         } else {
-            Single.just(cityInfoDao.loadCityById(cityId) ?: CityInfo(""))
+            cityInfoDao.loadCityById(cityId)
         }
     }
 
@@ -69,11 +69,12 @@ class CityInfoRepository @Inject constructor(
     }
 
     private fun loadRemoteCityForecast(cityId: String): Single<List<CityForecast>> {
-        return apiService.loadForecastForCity(cityId, ApiConfig.apiKey, ApiConfig.celsiusMetric).map {
-            transform(it)
-        }.doAfterSuccess {
-            saveForecastToDb(it)
-        }
+        return apiService.loadForecastForCity(cityId, ApiConfig.apiKey, ApiConfig.celsiusMetric)
+            .map {
+                transform(it)
+            }.doAfterSuccess {
+                saveForecastToDb(it)
+            }
     }
 
     private fun loadLocalCityForecast(cityId: String): Single<List<CityForecast>> {
@@ -94,17 +95,21 @@ class CityInfoRepository @Inject constructor(
 
     private fun transform(cityInfoResponse: CityInfoResponse): CityInfo =
         CityInfo(
-            cityInfoResponse.id, cityInfoResponse.name, cityInfoResponse.main.temp,
-            cityInfoResponse.main.pressure, cityInfoResponse.wind.speed, cityInfoResponse.weather.firstOrNull()?.description ?: ""
+            cityInfoResponse.id,
+            cityInfoResponse.name,
+            cityInfoResponse.main.temp,
+            cityInfoResponse.main.pressure,
+            cityInfoResponse.wind.speed,
+            cityInfoResponse.weather.firstOrNull()?.description ?: ""
         )
 
     private fun transform(cities: CityInfoListResponse): List<CityInfo> =
         cities.list.map { transform(it) }
 
     private fun transform(forecastListResponse: CityForecastListResponse): List<CityForecast> {
-        val cityId = forecastListResponse.cityId
+        val cityId = forecastListResponse.city.cityId
         return forecastListResponse.list.map {
-            CityForecast(cityId, it.dt, it.main.temp, it.main.pressure)
+            CityForecast(cityId, it.dt, it.main.temp, it.main.pressure, it.time)
         }
     }
 

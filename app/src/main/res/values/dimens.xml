@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="middleTextSize">16sp</dimen>
-    <dimen name="commonTextSize">12sp</dimen>
+    <dimen name="commonTextSize">14sp</dimen>
     <dimen name="largeTextSize">18sp</dimen>
 
     <dimen name="commonPadding">8dp</dimen>

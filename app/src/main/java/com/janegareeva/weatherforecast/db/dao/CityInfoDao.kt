@@ -14,11 +14,11 @@ interface CityInfoDao {
     @Query("SELECT * FROM "+ Config.CITY_INFO_TABLE)
     fun loadAllCities(): Single<List<CityInfo>>
 
-    @Query("SELECT * FROM "+ Config.CITY_INFO_TABLE+" WHERE name == :name")
-    fun loadCityByName(name: String): Single<CityInfo?>
+    @Query("SELECT * FROM "+ Config.CITY_INFO_TABLE+" WHERE name =:name")
+    fun loadCityByName(name: String): Single<CityInfo>
 
-    @Query("SELECT * FROM "+ Config.CITY_INFO_TABLE+" WHERE id == :id")
-    fun loadCityById(id: String): CityInfo?
+    @Query("SELECT * FROM "+ Config.CITY_INFO_TABLE+" WHERE id =:id")
+    fun loadCityById(id: String): Single<CityInfo>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(cityInfoList: List<CityInfo>)

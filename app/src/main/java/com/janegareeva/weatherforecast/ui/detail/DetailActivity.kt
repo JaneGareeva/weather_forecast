@@ -1,8 +1,11 @@
 package com.janegareeva.weatherforecast.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.janegareeva.weatherforecast.R
 import com.janegareeva.weatherforecast.app.App
 import com.janegareeva.weatherforecast.db.model.CityForecast
@@ -21,6 +24,7 @@ class DetailActivity : AppCompatActivity(), DetailScreenContract.View {
 
     @Inject
     lateinit var presenter: DetailsPresenter
+    lateinit var adapter: ForecastAdapter
 
     override val cityId: String
         get() = intent.getStringExtra(ARG_CITY_ID) ?: ""
@@ -33,11 +37,33 @@ class DetailActivity : AppCompatActivity(), DetailScreenContract.View {
             .appComponent((application as App).appComponent)
             .build()
             .inject(this)
+        adapter = ForecastAdapter()
+        forecastInfo.layoutManager = LinearLayoutManager(this)
+        forecastInfo.adapter = adapter
+        forecastInfo.addItemDecoration(
+            DividerItemDecoration(
+                this, LinearLayoutManager.VERTICAL
+            )
+        )
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun showCityInfo(city: CityInfo) {
         name.text = city.name
-        details.text = "current temperature: ${city.temp.roundToInt()} C, ${city.description}  " +
+        details.text = "current temperature: ${city.temp.roundToInt()} C, ${city.description},  " +
                 "pressure: ${city.pressure}, wind ${city.wind} m/c"
     }
 
@@ -46,7 +72,7 @@ class DetailActivity : AppCompatActivity(), DetailScreenContract.View {
     }
 
     override fun showForecast(cityForecast: List<CityForecast>) {
-
+        adapter.setData(cityForecast)
     }
 
     override fun showProgress(show: Boolean) {

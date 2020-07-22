@@ -47,6 +47,9 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
                 this, LinearLayoutManager.VERTICAL
             )
         )
+        add.setOnClickListener {
+            presenter.loadCityInfo(addInput.text.toString())
+        }
     }
 
     override fun showCitiesInfo(cities: List<CityInfo>) {
