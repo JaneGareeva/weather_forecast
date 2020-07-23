@@ -11,7 +11,7 @@ import io.reactivex.Single
 @Dao
 interface CityForecastDao {
 
-   @Query("SELECT * FROM "+ Config.FORECAST_TABLE+" WHERE cityId=:cityId")
+    @Query("SELECT * FROM " + Config.FORECAST_TABLE + " WHERE cityId=:cityId")
     fun loadForecast(cityId: String): Single<List<CityForecast>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

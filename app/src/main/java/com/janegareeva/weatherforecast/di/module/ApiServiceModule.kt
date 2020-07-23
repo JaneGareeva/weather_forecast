@@ -76,7 +76,7 @@ class ApiServiceModule {
     @Provides
     @AppScope
     fun provideService(retrofit: Retrofit): ApiService {
-        return retrofit.create<ApiService>(ApiService::class.java)
+        return retrofit.create(ApiService::class.java)
     }
 
     companion object {

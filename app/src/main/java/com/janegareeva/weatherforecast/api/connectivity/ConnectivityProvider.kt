@@ -24,7 +24,6 @@ interface ConnectivityProvider {
             data class Connected(val capabilities: NetworkCapabilities) : ConnectedState(
                 capabilities.hasCapability(NET_CAPABILITY_INTERNET)
             )
-
         }
     }
 

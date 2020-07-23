@@ -24,7 +24,7 @@ class DetailActivity : AppCompatActivity(), DetailScreenContract.View {
 
     @Inject
     lateinit var presenter: DetailsPresenter
-    lateinit var adapter: ForecastAdapter
+    private lateinit var adapter: ForecastAdapter
 
     override val cityId: String
         get() = intent.getStringExtra(ARG_CITY_ID) ?: ""

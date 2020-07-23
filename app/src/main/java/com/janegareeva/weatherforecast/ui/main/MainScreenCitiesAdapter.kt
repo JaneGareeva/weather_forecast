@@ -8,7 +8,7 @@ import com.janegareeva.weatherforecast.db.model.CityInfo
 import kotlinx.android.synthetic.main.city_item.view.*
 import kotlin.math.roundToInt
 
-class MainScreenCitiesAdapter(val itemClick: (CityInfo) -> Unit): androidx.recyclerview.widget.RecyclerView.Adapter<MainScreenCitiesAdapter.CityViewHolder>() {
+class MainScreenCitiesAdapter(private val itemClick: (CityInfo) -> Unit): androidx.recyclerview.widget.RecyclerView.Adapter<MainScreenCitiesAdapter.CityViewHolder>() {
 
     private var data: List<CityInfo> = listOf()
 

@@ -45,9 +45,12 @@ class MainScreenPresenter @Inject constructor(
     }
 
     override fun onStateChange(state: ConnectivityProvider.NetworkState) {
-        if ((state as? ConnectivityProvider.NetworkState.ConnectedState)?.hasInternet == true) {
+        val hasInternet = (state as? ConnectivityProvider.NetworkState.ConnectedState)?.hasInternet == true
+        if (hasInternet) {
             loadCitiesInfo()
         }
+        //Adding of new city is unavailable without internet connection
+        (view as MainScreenContract.MainView).showAddCityEnabled(hasInternet)
     }
 
     private fun handleCitiesResult(citiesInfo: List<CityInfo>) {

@@ -11,7 +11,7 @@ import com.janegareeva.weatherforecast.ui.base.AppScope
 import dagger.Module
 import dagger.Provides
 
-@Module (includes = [ApiServiceModule::class, DatabaseModule::class])
+@Module(includes = [ApiServiceModule::class, DatabaseModule::class])
 class AppModule(context: Application) {
     private val context: Context
 
@@ -23,13 +23,17 @@ class AppModule(context: Application) {
 
     @Provides
     @AppScope
-    fun provideConnectivityProvider(): ConnectivityProvider{
+    fun provideConnectivityProvider(): ConnectivityProvider {
         return ConnectivityProvider.createProvider(context)
     }
 
     @Provides
     @AppScope
-    fun provideCityInfoRepository(apiService: ApiService, cityInfoDao: CityInfoDao, cityForecastDao: CityForecastDao): CityInfoRepository {
+    fun provideCityInfoRepository(
+        apiService: ApiService,
+        cityInfoDao: CityInfoDao,
+        cityForecastDao: CityForecastDao
+    ): CityInfoRepository {
         return CityInfoRepository(apiService, cityInfoDao, cityForecastDao)
     }
 

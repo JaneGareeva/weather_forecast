@@ -8,7 +8,7 @@ import com.janegareeva.weatherforecast.db.model.CityForecast
 import kotlinx.android.synthetic.main.forecast_item.view.*
 import kotlin.math.roundToInt
 
-class ForecastAdapter() :
+class ForecastAdapter:
     androidx.recyclerview.widget.RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
 
     private var data: List<CityForecast> = listOf()

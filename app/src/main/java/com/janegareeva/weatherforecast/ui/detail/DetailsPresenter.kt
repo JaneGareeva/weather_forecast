@@ -12,7 +12,7 @@ import javax.inject.Inject
 class DetailsPresenter @Inject constructor(
     view: DetailScreenContract.View,
     connectivityProvider: ConnectivityProvider,
-    val cityInfoRepository: CityInfoRepository
+    private val cityInfoRepository: CityInfoRepository
 ) : BasePresenter(view, connectivityProvider), DetailScreenContract.Presenter {
 
     override fun loadCityInfo() {

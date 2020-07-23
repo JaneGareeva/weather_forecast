@@ -1,8 +1,6 @@
 package com.janegareeva.weatherforecast.db.model
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
 import com.google.gson.annotations.SerializedName
 import com.janegareeva.weatherforecast.db.Config
 

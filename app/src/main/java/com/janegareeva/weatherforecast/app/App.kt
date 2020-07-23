@@ -7,7 +7,7 @@ import com.janegareeva.weatherforecast.di.module.ApiServiceModule
 import com.janegareeva.weatherforecast.di.module.AppModule
 import com.janegareeva.weatherforecast.di.module.DatabaseModule
 
-class App: Application() {
+class App : Application() {
 
     lateinit var appComponent: AppComponent
         private set

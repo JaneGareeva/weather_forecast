@@ -1,6 +1,5 @@
 package com.janegareeva.weatherforecast.ui.base
 
-import javax.inject.Qualifier
 import javax.inject.Scope
 import kotlin.annotation.Retention
 

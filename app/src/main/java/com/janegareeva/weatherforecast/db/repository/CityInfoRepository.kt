@@ -10,9 +10,9 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class CityInfoRepository @Inject constructor(
-    val apiService: ApiService,
-    val cityInfoDao: CityInfoDao,
-    val cityForecastDao: CityForecastDao
+    private val apiService: ApiService,
+    private val cityInfoDao: CityInfoDao,
+    private val cityForecastDao: CityForecastDao
 ) {
 
     fun loadCitiesInfo(hasInternet: Boolean = true): Single<List<CityInfo>> {
@@ -24,6 +24,7 @@ class CityInfoRepository @Inject constructor(
     }
 
     fun findAndAddCityByName(name: String): Single<List<CityInfo>> {
+
         return apiService.loadCityInfoByName(
             name, ApiConfig.apiKey,
             ApiConfig.celsiusMetric
@@ -114,5 +115,5 @@ class CityInfoRepository @Inject constructor(
     }
 
     private fun getCityIdListWithDefault(cities: List<CityInfo>): List<String> =
-        (cities.map { it -> it.id } + Config.defaultCities).distinct()
+        (cities.map {it.id } + Config.defaultCities).distinct()
 }

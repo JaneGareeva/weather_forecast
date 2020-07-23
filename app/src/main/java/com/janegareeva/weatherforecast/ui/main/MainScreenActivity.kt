@@ -23,7 +23,7 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
     @Inject
     lateinit var presenter: MainScreenPresenter
 
-    lateinit var adapter: MainScreenCitiesAdapter
+    private lateinit var adapter: MainScreenCitiesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +54,10 @@ class MainScreenActivity : AppCompatActivity(), MainScreenContract.MainView {
 
     override fun showCitiesInfo(cities: List<CityInfo>) {
         adapter.setData(cities)
+    }
+
+    override fun showAddCityEnabled(isEnabled: Boolean) {
+        add.isEnabled = isEnabled
     }
 
     override fun showProgress(show: Boolean) {

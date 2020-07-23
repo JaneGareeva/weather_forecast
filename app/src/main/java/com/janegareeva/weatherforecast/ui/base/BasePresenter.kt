@@ -7,9 +7,9 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.janegareeva.weatherforecast.api.connectivity.ConnectivityProvider
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BasePresenter (
+abstract class BasePresenter(
     val view: BaseView,
-    val connectivityProvider: ConnectivityProvider
+    private val connectivityProvider: ConnectivityProvider
 ) : LifecycleObserver, ConnectivityProvider.ConnectivityStateListener {
 
     protected val disposables: CompositeDisposable = CompositeDisposable()
